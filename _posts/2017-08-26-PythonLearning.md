@@ -18,7 +18,7 @@ tags: python
 
 低调做人，高调做事
 
-```
+```python
 def print_function(_str):
     print "Hello Word!"
 ```
