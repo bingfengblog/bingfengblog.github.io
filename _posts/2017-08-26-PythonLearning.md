@@ -33,3 +33,9 @@ def print_function(_str):
 [豆腐西施全套种子](http://www.pyfeng.com)
 
 逝去的激情
+
+```
+import os
+def test(_str):
+   print "a"
+```
