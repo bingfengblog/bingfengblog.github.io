@@ -115,53 +115,45 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
     [ADVISE 3-1] 按照开关命令，环境变量，source文件，常量，变量，函数，主函数/主逻辑的顺序书写脚本 
 
-```
-#!/bin/bash 
-# 1. 开关 
-set -x # set -o xtrace 
-set -e # set -o errexit 
-set -u # set -o nounset 
-set -o pipefail 
-```
-`3.2 环境变量`
-
+    ```
+    #!/bin/bash 
+    # 1. 开关 
+    set -x # set -o xtrace 
+    set -e # set -o errexit 
+    set -u # set -o nounset 
+    set -o pipefail 
+    # 2. 环境变量
     PATH=/home/abc/bin:$PATH export PATH 
-
-`3.2 source文件`
-
+    
+    # 3. source文件
     source some_lib.sh
-
-`3.3. 常量`
-
+    
+    # 4. 常量
     readonly PI=3.14 
-
-`3.5 变量`
-
+    
+    # 5. 变量
     my_var=1 
-
-`3.6 函数`
-
-```
-# Usage
-function usage() {
-} 
-
-# 函数注释，格式参考注释章节 
-function my_func1() {
-} 
-
-# 函数注释，格式参考注释章节 
-function my_func2() {
-} 
-
-# 函数注释，格式参考注释章节 
-function main() {
-} 
-```
-
-`3.7 主函数/主逻辑`
-
-   main "$@"
+    
+    # 6. 函数
+    #  Usage
+    function usage() {
+    } 
+    
+    # 函数注释，格式参考注释章节 
+    function my_func1() {
+    } 
+    
+    # 函数注释，格式参考注释章节 
+    function my_func2() {
+    } 
+    
+    # 函数注释，格式参考注释章节 
+    function main() {
+    } 
+    
+    # 主函数/主逻辑
+    main "$@"
+    ```
 
 ### 4. 命名规范(Naming Conventions)
 
