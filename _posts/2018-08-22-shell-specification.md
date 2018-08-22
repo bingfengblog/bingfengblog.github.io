@@ -31,7 +31,9 @@ tags: shell
 不包括特定应用的代码实现，如：md5生成方式。
 
 ### 1. 背景(Background)
-1.1 用哪个Shell
+
+- 1.1 用哪个Shell
+
 [RULE 1-1] Bash 是公司唯一指定的Shell语言，版本在4.0（含）以上
 
 **查看bash版本的方法**
