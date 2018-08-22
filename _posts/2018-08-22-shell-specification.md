@@ -20,21 +20,21 @@ tags: shell
 
 ### 0. 一般信息
  
-  本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
-  
-  文档是Bash编程规范，不是POSIX Shell编程规范
-  
-  章节分类和内容组织依据Google Shell Style Guide
-  
-  仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
-  
-  不包括特定应用的代码实现，如：md5生成方式。
+    本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
+    
+    文档是Bash编程规范，不是POSIX Shell编程规范
+    
+    章节分类和内容组织依据Google Shell Style Guide
+    
+    仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
+    
+    不包括特定应用的代码实现，如：md5生成方式。
 
 ### 1. 背景(Background)
 
 `1.1 用哪个Shell`
 
-[RULE 1-1] Bash 是公司唯一指定的Shell语言，版本在4.0（含）以上
+    [RULE 1-1] Bash 是公司唯一指定的Shell语言，版本在4.0（含）以上
 
 **查看bash版本的方法**
 
@@ -51,35 +51,35 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
 `1.2 何时不选择使用 Shell`
 
-  [ADVISE 1-1] Shell仅用于开发小工具(small utilities)和包装脚本(wrapper scripts)
-
-  [ADVISE 1-2] 如果仅仅调用其他程序，或是极少的数据处理，Shell是合适的选择
-
-  [ADVISE 1-3] 如需要使用hash（Bash3.x以下原生不支持）、嵌套array，建议用其他语言实现
-
-  [ADVISE 1-4] 对性能要求较高的场景，建议用其他语言实现
+    [ADVISE 1-1] Shell仅用于开发小工具(small utilities)和包装脚本(wrapper scripts)
+  
+    [ADVISE 1-2] 如果仅仅调用其他程序，或是极少的数据处理，Shell是合适的选择
+  
+    [ADVISE 1-3] 如需要使用hash（Bash3.x以下原生不支持）、嵌套array，建议用其他语言实现
+  
+    [ADVISE 1-4] 对性能要求较高的场景，建议用其他语言实现
 
 ### 2. Shell文件和解释器调用(Shell Files and Interpreter Invocation)
 
 `2.1 扩展文件名`
 
-  [RULE 2-1] 可执行Shell脚本无需后缀或使用后缀.sh
-
-  [RULE 2-2] 库文件必须用后缀.sh
+    [RULE 2-1] 可执行Shell脚本无需后缀或使用后缀.sh
+  
+    [RULE 2-2] 库文件必须用后缀.sh
 
 `2.2 SUID/SGID`
 
-  [RULE 2-3] SUID、SGID禁止使用，需要的时候使用 sudo
-
-  解释：防止脚本静默访问没有权限的资源，如果必须访问请通过sudo显示指定
+    [RULE 2-3] SUID、SGID禁止使用，需要的时候使用 sudo
+  
+    解释：防止脚本静默访问没有权限的资源，如果必须访问请通过sudo显示指定
 
 `2.3 Usage`
 
-  [RULE 2-4] 可执行脚本在加-h参数调用时应打印Usage
-
-  示例：可以在系统里执行awk -h观察此程序的Usage，
-
-  提示：脚本输入参数的处理可以参考：getopt、case等
+    [RULE 2-4] 可执行脚本在加-h参数调用时应打印Usage
+  
+    示例：可以在系统里执行awk -h观察此程序的Usage，
+  
+    提示：脚本输入参数的处理可以参考：getopt、case等
 
 ```
 $ awk -h
@@ -112,28 +112,38 @@ POSIX options:        GNU long options:
 ```
 
 ### 3. 书写布局(Layout)
-3.1 布局(Layout)
-[ADVISE 3-1] 按照开关命令，环境变量，source文件，常量，变量，函数，主函数/主逻辑的顺序书写脚本 
+
+`3.1 布局(Layout)`
+
+    [ADVISE 3-1] 按照开关命令，环境变量，source文件，常量，变量，函数，主函数/主逻辑的顺序书写脚本 
+
+```
 #!/bin/bash 
 # 1. 开关 
 set -x # set -o xtrace 
 set -e # set -o errexit 
 set -u # set -o nounset 
 set -o pipefail 
+```
+`3.2 环境变量`
 
-# 2. 环境变量 
-PATH=/home/abc/bin:$PATH export PATH 
+    PATH=/home/abc/bin:$PATH export PATH 
 
-# 3. source文件 
-source some_lib.sh
+`3.2 source文件`
 
-# 4. 常量 
-readonly PI=3.14 
+    source some_lib.sh
 
-# 5. 变量 
-my_var=1 
+`3.3. 常量`
 
-# 6. 函数 
+    readonly PI=3.14 
+
+`3.5 变量`
+
+    my_var=1 
+
+`3.6 函数`
+
+```
 # Usage
 function usage() {
 } 
@@ -149,9 +159,11 @@ function my_func2() {
 # 函数注释，格式参考注释章节 
 function main() {
 } 
+```
 
-# 7. 主函数/主逻辑 
-main "$@"
+`3.7 主函数/主逻辑`
+
+   main "$@"
 
 ### 4. 命名规范(Naming Conventions)
 
