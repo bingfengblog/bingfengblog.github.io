@@ -19,12 +19,16 @@ tags: shell
 > 10. 其他最佳实践(Best Practice)
 
 ### 0. 一般信息
+ 
 本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
-文档是Bash编程规范，不是POSIX Shell编程规范
-章节分类和内容组织依据Google Shell Style Guide
-仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
-不包括特定应用的代码实现，如：md5生成方式。
 
+文档是Bash编程规范，不是POSIX Shell编程规范
+
+章节分类和内容组织依据Google Shell Style Guide
+
+仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
+
+不包括特定应用的代码实现，如：md5生成方式。
 
 ### 1. 背景(Background)
 1.1 用哪个Shell
