@@ -21,13 +21,9 @@ tags: shell
 ### 0. 一般信息
  
     本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
-    
     文档是Bash编程规范，不是POSIX Shell编程规范
-    
     章节分类和内容组织依据Google Shell Style Guide
-    
     仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
-    
     不包括特定应用的代码实现，如：md5生成方式。
 
 ### 1. 背景(Background)
@@ -52,11 +48,8 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 `1.2 何时不选择使用 Shell`
 
     [ADVISE 1-1] Shell仅用于开发小工具(small utilities)和包装脚本(wrapper scripts)
-  
     [ADVISE 1-2] 如果仅仅调用其他程序，或是极少的数据处理，Shell是合适的选择
-  
     [ADVISE 1-3] 如需要使用hash（Bash3.x以下原生不支持）、嵌套array，建议用其他语言实现
-  
     [ADVISE 1-4] 对性能要求较高的场景，建议用其他语言实现
 
 ### 2. Shell文件和解释器调用(Shell Files and Interpreter Invocation)
@@ -64,21 +57,17 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 `2.1 扩展文件名`
 
     [RULE 2-1] 可执行Shell脚本无需后缀或使用后缀.sh
-  
     [RULE 2-2] 库文件必须用后缀.sh
 
 `2.2 SUID/SGID`
 
     [RULE 2-3] SUID、SGID禁止使用，需要的时候使用 sudo
-  
     解释：防止脚本静默访问没有权限的资源，如果必须访问请通过sudo显示指定
 
 `2.3 Usage`
 
     [RULE 2-4] 可执行脚本在加-h参数调用时应打印Usage
-  
     示例：可以在系统里执行awk -h观察此程序的Usage，
-  
     提示：脚本输入参数的处理可以参考：getopt、case等
 
     $ awk -h
@@ -157,84 +146,105 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
 ### 4. 命名规范(Naming Conventions)
 
-4.1 常量/环境变量名(Constants and Environment Variable Names)
-[RULE 4-1] 全部大写，下划线分割，且在文件头部声明
-[RULE 4-2] 所有需要export的变量都要大写
-#配置文件常量
-FILE_PATH="/home/spider/conf/"
-#全局常量
-declare -r MAX_PATH_SIZE=256
-#环境变量
-export PYPATH="/home/spider/python"
-4.2 source文件名(Source Filenames)
-[RULE 4-3] 被source的文件，其文件名全部小写，下划线分割单词
-source lib/color_print.sh
-4.3 常量(Read-only Variables)
-[RULE 4-4] 使用readonly或declare -r，明确声明常量，建议只使用readonly的方式
-# 使用readonly声明方式
-readonly NAME='spider'
-# 使用declare声明方式
-declare -r NAME='spider'
-4.4 变量名(Variable Names)
-[RULE 4-5] 命名全部小写，下划线分割单词
-[ADVISE 4-1] 多个关联的变量名在含义上保持风格一致，比如for in循环的时候
-# $url , $url_list 含义一致
-for url in ${url_list}; do
-    something_with "${url}"
-done
-4.5 函数名(Function Names)
-[RULE 4-6] 命名全部小写，下划线分割单词
-[RULE 4-7] 小括号必须在函数名以后，不能有空格
-[RULE 4-8] 函数的左大括号与函数名在同一行
-[RULE 4-9] 使用function关键字
-[ADVISE 4-2] 使用 :: 区分包、库
-function my_func() {
-    ...
-}
-function lib::my_func() {
-    ...
-}
-4.6 local变量(Use Local Variables)
-[RULE 4-10] 使用local声明函数内部使用的变量
-# Good
-function my_func2() {
-    # 声明和赋值在一行
-    local name="$1"
-    # 声明和赋值拆为2行
-    local my_var
-    my_var="$1"    
-}
+`4.1 常量/环境变量名(Constants and Environment Variable Names)`
 
-# Bad
-function my_fun3() {
-    # 不要这样用，$?为local的返回值，而不是my_func
-    local my_var="$(my_func)"
-    [[ $? -eq 0 ]] || return
-}
-4.7 main函数
-[ADVISE 4-3] 对于长脚本，使用main函数放到所有函数声明的后面
-# 参见第三章例子
-function main() {
-}
-main "$@"
+    [RULE 4-1] 全部大写，下划线分割，且在文件头部声明
+    [RULE 4-2] 所有需要export的变量都要大写
+    #配置文件常量
+    FILE_PATH="/home/spider/conf/"
+    #全局常量
+    declare -r MAX_PATH_SIZE=256
+    #环境变量
+    export PYPATH="/home/spider/python"
+
+`4.2 source文件名(Source Filenames)`
+
+    [RULE 4-3] 被source的文件，其文件名全部小写，下划线分割单词
+    source lib/color_print.sh
+
+`4.3 常量(Read-only Variables)`
+
+    [RULE 4-4] 使用readonly或declare -r，明确声明常量，建议只使用readonly的方式
+    # 使用readonly声明方式
+    readonly NAME='spider'
+    # 使用declare声明方式
+    declare -r NAME='spider'
+
+`4.4 变量名(Variable Names)`
+
+    [RULE 4-5] 命名全部小写，下划线分割单词
+    [ADVISE 4-1] 多个关联的变量名在含义上保持风格一致，比如for in循环的时候
+
+    # $url , $url_list 含义一致
+    for url in ${url_list}; do
+        something_with "${url}"
+    done
+
+`4.5 函数名(Function Names)`
+
+    [RULE 4-6] 命名全部小写，下划线分割单词
+    [RULE 4-7] 小括号必须在函数名以后，不能有空格
+    [RULE 4-8] 函数的左大括号与函数名在同一行
+    [RULE 4-9] 使用function关键字
+    [ADVISE 4-2] 使用 :: 区分包、库
+
+    function my_func() {
+        ...
+    }
+    function lib::my_func() {
+        ...
+    }
+
+`4.6 local变量(Use Local Variables)`
+
+    [RULE 4-10] 使用local声明函数内部使用的变量
+
+    # Good
+    function my_func2() {
+        # 声明和赋值在一行
+        local name="$1"
+        # 声明和赋值拆为2行
+        local my_var
+        my_var="$1"    
+    }
+    
+    # Bad
+    function my_fun3() {
+        # 不要这样用，$?为local的返回值，而不是my_func
+        local my_var="$(my_func)"
+        [[ $? -eq 0 ]] || return
+    }
+
+`4.7 main函数`
+
+    [ADVISE 4-3] 对于长脚本，使用main函数放到所有函数声明的后面
+
+    # 参见第三章例子
+    function main() {
+    }
+    main "$@"
 
 ### 5. 注释(Comments)
-5.1 注释样式
-[RULE 5-1] 采用单行注释#
-# comments
-[ADVISE 5-1] 使用utf8编码（尽量用英文注释）
-[ADVISE 5-2] 仅调试时才使用多行注释，多行注释建议使用 :<<\###的方式，方便开关
-:<<\###  下面是本次要注释的内容
-    do_something
-    do_other_thing
-###
 
-如果需要执行这段代码，则
-#:<<'###'  下面是本次要注释的内容
-    do_something
-    do_other_thing
-###
-5.2 文件头注释(File Header)
+    `5.1 注释样式`
+    
+    [RULE 5-1] 采用单行注释#
+    # comments
+    [ADVISE 5-1] 使用utf8编码（尽量用英文注释）
+    [ADVISE 5-2] 仅调试时才使用多行注释，多行注释建议使用 :<<\###的方式，方便开关
+    :<<\###  下面是本次要注释的内容
+        do_something
+        do_other_thing
+    ###
+    
+    如果需要执行这段代码，则
+    #:<<'###'  下面是本次要注释的内容
+        do_something
+        do_other_thing
+    ###
+
+`5.2 文件头注释(File Header)`
+
 [RULE 5-2] 脚本第一行为 #!/bin/bash
 # Good
 #!/bin/bash
