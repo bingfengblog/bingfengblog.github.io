@@ -6,9 +6,23 @@ tags: python
 ---
 
 
-#### 标题1
+#### 常用技巧
 
-好久没去运动了
+1. 判断IP是否合法
+
+```
+import socket
+def valid_ip(address):
+    try:
+        socket.inet_aton(address)
+        return True
+    except:
+        return False
+if __name__ == "__main__":
+    print valid_ip("1.1.1.1")
+    print valid_ip("2,1.1.1")
+```
+
 
 ### 标题2
 
