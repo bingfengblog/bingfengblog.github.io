@@ -81,35 +81,33 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
   
     提示：脚本输入参数的处理可以参考：getopt、case等
 
-```
-$ awk -h
-Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
-Usage: awk [POSIX or GNU style options] [--] 'program' file ...
-POSIX options:        GNU long options:
-    -f progfile                 --file=progfile
-    -F fs                       --field-separator=fs
-    -v var=val                  --assign=var=val
-    -m[fr] val
-    -O                          --optimize
-    -W compat                   --compat
-    -W copyleft                 --copyleft
-    -W copyright                --copyright
-    -W dump-variables[=file]    --dump-variables[=file]
-    -W exec=file                --exec=file
-    -W gen-po                   --gen-po
-    -W help                     --help
-    -W lint[=fatal]             --lint[=fatal]
-    -W lint-old                 --lint-old
-    -W non-decimal-data         --non-decimal-data
-    -W profile[=file]           --profile[=file]
-    -W posix                    --posix
-    -W re-interval              --re-interval
-    -W source=program-text      --source=program-text
-    -W traditional              --traditional
-    -W usage                    --usage
-    -W use-lc-numeric           --use-lc-numeric
-    -W version                  --version
-```
+    $ awk -h
+    Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
+    Usage: awk [POSIX or GNU style options] [--] 'program' file ...
+    POSIX options:        GNU long options:
+        -f progfile                 --file=progfile
+        -F fs                       --field-separator=fs
+        -v var=val                  --assign=var=val
+        -m[fr] val
+        -O                          --optimize
+        -W compat                   --compat
+        -W copyleft                 --copyleft
+        -W copyright                --copyright
+        -W dump-variables[=file]    --dump-variables[=file]
+        -W exec=file                --exec=file
+        -W gen-po                   --gen-po
+        -W help                     --help
+        -W lint[=fatal]             --lint[=fatal]
+        -W lint-old                 --lint-old
+        -W non-decimal-data         --non-decimal-data
+        -W profile[=file]           --profile[=file]
+        -W posix                    --posix
+        -W re-interval              --re-interval
+        -W source=program-text      --source=program-text
+        -W traditional              --traditional
+        -W usage                    --usage
+        -W use-lc-numeric           --use-lc-numeric
+        -W version                  --version
 
 ### 3. 书写布局(Layout)
 
