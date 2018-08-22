@@ -32,7 +32,7 @@ tags: shell
 
 ### 1. 背景(Background)
 
-> 1.1 用哪个Shell
+`1.1 用哪个Shell`
 
 [RULE 1-1] Bash 是公司唯一指定的Shell语言，版本在4.0（含）以上
 
@@ -49,7 +49,7 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 [RULE 1-2] 请遵守此规范，或保证和原有代码风格、语法、规范一致
 解释：对历史代码，不做强制打平到当前代码规范的要求
 
-> 1.2 何时不选择使用 Shell
+`1.2 何时不选择使用 Shell`
 
 [ADVISE 1-1] Shell仅用于开发小工具(small utilities)和包装脚本(wrapper scripts)
 [ADVISE 1-2] 如果仅仅调用其他程序，或是极少的数据处理，Shell是合适的选择
