@@ -4,18 +4,19 @@ title: shell编码规范
 date: 2018-08-22
 tags: shell
 ---
-章节
-0. 一般信息
-1. 背景(Background)
-2. Shell文件和解释器调用(Shell Files and Interpreter Invocation)
-3. 书写布局(Layout）
-4. 命名规范(Naming Conventions)
-5. 注释(Comments)
-6. 格式(Formatting)
-7. 特性和缺陷(Features and Bugs)
-8. 调用命令(Calling Commands)
-9. 环境(Environment)
-10. 其他最佳实践(Best Practice)
+## 章节
+
+> 0. 一般信息
+> 1. 背景(Background)
+> 2. Shell文件和解释器调用(Shell Files and Interpreter Invocation)
+> 3. 书写布局(Layout）
+> 4. 命名规范(Naming Conventions)
+> 5. 注释(Comments)
+> 6. 格式(Formatting)
+> 7. 特性和缺陷(Features and Bugs)
+> 8. 调用命令(Calling Commands)
+> 9. 环境(Environment)
+> 10. 其他最佳实践(Best Practice)
 
 ### 一般信息
 本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
@@ -24,22 +25,21 @@ tags: shell
 仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
 不包括特定应用的代码实现，如：md5生成方式。
 
-联系方式：
 
-邮件：adam.gao@baishancloud.com
-参考文档
-
-Google Shell Style Guide
-Chromium Project Shell Style Guidelines
-1. 背景(Background)
+### 背景(Background)
 1.1 用哪个Shell
 [RULE 1-1] Bash 是公司唯一指定的Shell语言，版本在4.0（含）以上
-# 查看bash版本的方法
+
+**查看bash版本的方法**
+
+```
 $ bash --version
 bash --version
 GNU bash, version 4.1.2(1)-release (x86_64-redhat-linux-gnu)
 Copyright (C) 2009 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+```
+
 [RULE 1-2] 请遵守此规范，或保证和原有代码风格、语法、规范一致
 解释：对历史代码，不做强制打平到当前代码规范的要求
 1.2 何时不选择使用 Shell
@@ -47,13 +47,18 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 [ADVISE 1-2] 如果仅仅调用其他程序，或是极少的数据处理，Shell是合适的选择
 [ADVISE 1-3] 如需要使用hash（Bash3.x以下原生不支持）、嵌套array，建议用其他语言实现
 [ADVISE 1-4] 对性能要求较高的场景，建议用其他语言实现
-2. Shell文件和解释器调用(Shell Files and Interpreter Invocation)
+
+### Shell文件和解释器调用(Shell Files and Interpreter Invocation)
 2.1 扩展文件名
+
 [RULE 2-1] 可执行Shell脚本无需后缀或使用后缀.sh
 [RULE 2-2] 库文件必须用后缀.sh
+
 2.2 SUID/SGID
+
 [RULE 2-3] SUID、SGID禁止使用，需要的时候使用 sudo
 解释：防止脚本静默访问没有权限的资源，如果必须访问请通过sudo显示指定
+
 2.3 Usage
 [RULE 2-4] 可执行脚本在加-h参数调用时应打印Usage
 # 示例：可以在系统里执行awk -h观察此程序的Usage，
@@ -85,7 +90,8 @@ POSIX options:        GNU long options:
     -W usage                    --usage
     -W use-lc-numeric           --use-lc-numeric
     -W version                  --version
-3. 书写布局(Layout)
+
+### 书写布局(Layout)
 3.1 布局(Layout)
 [ADVISE 3-1] 按照开关命令，环境变量，source文件，常量，变量，函数，主函数/主逻辑的顺序书写脚本 
 #!/bin/bash 
