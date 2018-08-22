@@ -18,7 +18,7 @@ tags: shell
 > 9. 环境(Environment)
 > 10. 其他最佳实践(Best Practice)
 
-### 一般信息
+### 0. 一般信息
 本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
 文档是Bash编程规范，不是POSIX Shell编程规范
 章节分类和内容组织依据Google Shell Style Guide
@@ -26,7 +26,7 @@ tags: shell
 不包括特定应用的代码实现，如：md5生成方式。
 
 
-### 背景(Background)
+### 1. 背景(Background)
 1.1 用哪个Shell
 [RULE 1-1] Bash 是公司唯一指定的Shell语言，版本在4.0（含）以上
 
@@ -48,7 +48,7 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 [ADVISE 1-3] 如需要使用hash（Bash3.x以下原生不支持）、嵌套array，建议用其他语言实现
 [ADVISE 1-4] 对性能要求较高的场景，建议用其他语言实现
 
-### Shell文件和解释器调用(Shell Files and Interpreter Invocation)
+### 2. Shell文件和解释器调用(Shell Files and Interpreter Invocation)
 2.1 扩展文件名
 
 [RULE 2-1] 可执行Shell脚本无需后缀或使用后缀.sh
@@ -91,7 +91,7 @@ POSIX options:        GNU long options:
     -W use-lc-numeric           --use-lc-numeric
     -W version                  --version
 
-### 书写布局(Layout)
+### 3. 书写布局(Layout)
 3.1 布局(Layout)
 [ADVISE 3-1] 按照开关命令，环境变量，source文件，常量，变量，函数，主函数/主逻辑的顺序书写脚本 
 #!/bin/bash 
@@ -132,7 +132,9 @@ function main() {
 
 # 7. 主函数/主逻辑 
 main "$@"
-4. 命名规范(Naming Conventions)
+
+### 4. 命名规范(Naming Conventions)
+
 4.1 常量/环境变量名(Constants and Environment Variable Names)
 [RULE 4-1] 全部大写，下划线分割，且在文件头部声明
 [RULE 4-2] 所有需要export的变量都要大写
@@ -193,7 +195,8 @@ function my_fun3() {
 function main() {
 }
 main "$@"
-5. 注释(Comments)
+
+### 5. 注释(Comments)
 5.1 注释样式
 [RULE 5-1] 采用单行注释#
 # comments
@@ -260,7 +263,8 @@ function main() {
 5.4 TODO 注释(TODO Comments)
 [ADVISE 5-5] 使用 “#TODO(添加者)” 标注将来还要做的工作
 # TODO(Someone): xxx (issue ####)
-6. 格式(Formatting)
+
+### 6. 格式(Formatting)
 6.1 缩进
 [RULE 6-1] 用4个空格，不要用tab
 # 解释：不同编辑器对TAB的设定可能不同，使用TAB容易造成在一些编辑器下代码混乱，所以建议一率转换成空格。
@@ -496,7 +500,9 @@ echo "${prefix}_dir/file"
 # 会把prefix_dir视为变量名，由于无定义，会输出/file，若设置了set -u，则会报错。
 prefix="pre"
 echo "$prefix_dir/file"
-7. 特性和缺陷(Features and Bugs)
+
+### 7. 特性和缺陷(Features and Bugs)
+
 7.1 环境变量赋值(Environment Variable Assignment)
 [RULE 7-1] 环境变量赋值中，严格禁止使用相对路径。
 # 解释：环境变量会应用到被调用的其他命令上。若其他命令改变了当前路径，环境变量中的相对路径会发生变化。
@@ -630,7 +636,9 @@ echo "${ret}"
 [RULE 7-9] 函数返回值0代表成功，非零代表其他含义
 [RULE 7-10] return仅做返回值用，禁止用函数返回值返回计算结果
 解释：return只能返回0-255的数字，如果有其他需要返回的内容，使用对命令输出捕获的方式
-8. 调用命令(Calling Commands)
+
+### 8. 调用命令(Calling Commands)
+
 8.1 检查返回值(Checking Return Values)
 [ADVISE 8-1] 检查返回值。建议开启set -e选项。
 # cd命令的返回值，被'&&'判断，只有cd成功了，才rm
@@ -679,7 +687,9 @@ var=$(</proc/loadavg)
 
 # Bad:
 var=$(cat /proc/loadavg)
-9. 环境(Environment)
+
+### 9. 环境(Environment)
+
 9.1 STDOUT 与 STDERR
 [RULE 9-1] 错误信息输出至STDERR，以更容易区分正常消息
 [ADVISE 9-1] 推荐用函数来输出错误
@@ -691,7 +701,9 @@ if ! do_something; then
     err "Unable to do_something"
     exit "${E_DID_NOTHING}"
 fi
-10. 其他最佳实践（Best Practice）
+
+### 10. 其他最佳实践（Best Practice）
+
 10.1 set
 [ADVISE 10-1] 建议开启 set -e, set -u, set -o pipefail 开关，帮助定位问题。
 #!/bin/bash
