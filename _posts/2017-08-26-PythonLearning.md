@@ -6,7 +6,7 @@ tags: python
 ---
 
 
-#### 常用技巧
+### 常用技巧
 
 1. 判断IP是否合法
 
@@ -22,7 +22,13 @@ if __name__ == "__main__":
     print valid_ip("1.1.1.1")
     print valid_ip("2,1.1.1")
 ```
+2. 获取机器主机名
 
+```
+import socket
+hostname = socket.gethostname()
+print hostname
+```
 
 ### 标题2
 
