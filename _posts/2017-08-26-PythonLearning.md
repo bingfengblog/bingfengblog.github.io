@@ -8,7 +8,7 @@ tags: python
 
 ### 常用技巧
 
-> 判断IP是否合法
+* *判断IP是否合法*
 
 ```
 import socket
@@ -22,7 +22,7 @@ if __name__ == "__main__":
     print valid_ip("1.1.1.1")
     print valid_ip("2,1.1.1")
 ```
-> 获取机器主机名
+* *获取机器主机名*
 
 ```
 import socket
