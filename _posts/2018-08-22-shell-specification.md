@@ -20,19 +20,19 @@ tags: shell
 
 ### 0. 一般信息
  
-本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
-
-文档是Bash编程规范，不是POSIX Shell编程规范
-
-章节分类和内容组织依据Google Shell Style Guide
-
-仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
-
-不包括特定应用的代码实现，如：md5生成方式。
+  本文档适用于Bash 3.0及以上版本，不包括4.0新增特性
+  
+  文档是Bash编程规范，不是POSIX Shell编程规范
+  
+  章节分类和内容组织依据Google Shell Style Guide
+  
+  仅包括bash语言(包括内部命令)的内容，不包括外部命令的使用建议，如awk。
+  
+  不包括特定应用的代码实现，如：md5生成方式。
 
 ### 1. 背景(Background)
 
-#### 1.1 用哪个Shell
+> 1.1 用哪个Shell
 
 [RULE 1-1] Bash 是公司唯一指定的Shell语言，版本在4.0（含）以上
 
@@ -48,7 +48,9 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 
 [RULE 1-2] 请遵守此规范，或保证和原有代码风格、语法、规范一致
 解释：对历史代码，不做强制打平到当前代码规范的要求
-#### 1.2 何时不选择使用 Shell
+
+> 1.2 何时不选择使用 Shell
+
 [ADVISE 1-1] Shell仅用于开发小工具(small utilities)和包装脚本(wrapper scripts)
 [ADVISE 1-2] 如果仅仅调用其他程序，或是极少的数据处理，Shell是合适的选择
 [ADVISE 1-3] 如需要使用hash（Bash3.x以下原生不支持）、嵌套array，建议用其他语言实现
