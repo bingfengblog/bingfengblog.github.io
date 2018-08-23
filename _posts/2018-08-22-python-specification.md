@@ -461,7 +461,7 @@ tags: python
     decorator太灵活，可以任意改变函数参数和返回值，容易产生非预期行为。滥用容易使代码可维护性性变差
     decorator在import时执行，decorator代码执行中的错误很难处理和恢复
 
-#3. 风格规范
+# 3. 风格规范
 
 ### 3.1 分号
 
@@ -729,7 +729,7 @@ tags: python
     
     _InternalClassName, _INTERNAL_CONSTANT_NAME, _internal_function_name, _protected_member_name, __private_member_name
 
-#4. 编程实践
+# 4. 编程实践
 
 ### 4.1 python解释器
 
