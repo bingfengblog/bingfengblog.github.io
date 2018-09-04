@@ -30,7 +30,7 @@ hostname = socket.gethostname()
 print hostname
 ```
 
-* 缓存结果, 提高性能
+* **缓存结果, 提高性能**
 
 ```
 import time
@@ -64,7 +64,9 @@ def clock(func):
         return result
     return clocked
 
-@memo
+# 在 Python 的 3.2 版本中，引入了一个非常优雅的缓存机器，即 functool 模块中的("Least Recently Used") lru_cache 装饰器
+# 如果要在 python2 中使用 lru_cahce 需要安装 functools32
+@memo  # 同 @functools.lru_cache() 等价
 @clock
 def fibonacci(n):
     if n < 2:
