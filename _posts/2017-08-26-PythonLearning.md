@@ -30,32 +30,50 @@ hostname = socket.gethostname()
 print hostname
 ```
 
-### 标题2
-
-不知道该何去何从
-
-## 标题3
-
-低调做人，高调做事
-
-```python
-def print_function(_str):
-    print "Hello Word!"
-```
-
->* 1. 内容1
-
->* 2. 内容2
-
-**这是什么,推荐一部感人的动画电影** `你的名字`
-
-福利链接地址:
-[豆腐西施全套种子](http://www.pyfeng.com)
-
-逝去的激情
+* 缓存结果, 提高性能
 
 ```
-import os
-def test(_str):
-   print "a"
+import time
+import functools
+
+def memo(func):
+    "Memoize function f."
+    table = {}
+    def fmemo(args):
+        if args not in table:
+            table[args] = func(args)
+        return table[args]
+    fmemo.memo = table
+    return fmemo
+
+def clock(func):
+    @functools.wraps(func)
+    def clocked(*args, **kwargs):
+        t0 = time.time()
+        result = func(*args, **kwargs)
+        elapsed = time.time() - t0
+        name = func.__name__
+        arg_list = []
+        if args:
+            arg_list.append(", ".join(repr(arg) for arg in args))
+        if kwargs:
+            pairs = ['%s=%r' % (k, w) for k, w in sorted(kwargs.items())]
+            arg_list.append(", ".join(pairs))
+        arg_str = ", ".join(arg_list)
+        print('[%0.8fs] %s(%s) -> %r ' % (elapsed, name, arg_str, result))
+        return result
+    return clocked
+
+@memo
+@clock
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n-2) + fibonacci(n-1)
+
+if __name__ == "__main__":
+    fibonacci(10)
 ```
+
+[首页](http://www.pyfeng.com)
+
