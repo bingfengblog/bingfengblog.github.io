@@ -77,5 +77,34 @@ if __name__ == "__main__":
     fibonacci(10)
 ```
 
+* **进程池,需要结果统计**
+
+```
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+import multiprocessing
+import time
+
+def func(msg):
+    print('hello :', msg, time.ctime())
+    time.sleep(2)
+    print('end :', msg, time.ctime())
+    return 'done' + msg
+
+if __name__=='__main__':
+    pool = multiprocessing.Pool(2)
+    result = []
+    for i in range(5):
+        msg = 'hello %s' %i
+        result.append(pool.apply_async(func=func,args=(msg,)))
+
+    pool.close()
+    pool.join()
+
+    for res in result:
+        print('------------:',res.get())
+
+    print('--All End--')
+```
 [首页](http://www.pyfeng.com)
 
