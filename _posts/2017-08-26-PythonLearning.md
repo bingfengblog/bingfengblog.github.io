@@ -107,6 +107,18 @@ if __name__=='__main__':
     print('--All End--')
 ```
 
+* **调用shell命令**
+
+```
+def cmd_run(cmdstr, r=False):
+        """ run shell commond """
+        ret = subprocess.Popen(cmdstr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        msg = ret.communicate()
+        if msg[1]:
+            raise cmdException(msg[1])
+        return msg[0] if r
+```
+
 ### 单元测试
 
 ```
