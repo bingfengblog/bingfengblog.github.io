@@ -110,13 +110,60 @@ if __name__=='__main__':
 * **调用shell命令**
 
 ```
-def cmd_run(cmdstr, r=False):
+def cmd_run(cmdstr, retrun_content=False):
         """ run shell commond """
         ret = subprocess.Popen(cmdstr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         msg = ret.communicate()
         if msg[1]:
             raise cmdException(msg[1])
-        return msg[0] if r
+        if return_content:
+            return msg[0]
+```
+
+* **retry装饰器**
+
+```
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+import random
+import logging
+from functools import wraps
+
+logging.basicConfig()
+log = logging.getLogger("retry")
+
+def retry(max_times=3):
+    u''' 重试装饰器
+    :params times: 最大重试次数
+    '''
+    def decorate(func):
+        @wraps(func)
+        def retry_fuc(*args, **kwargs):
+            retry_times = max_times
+            while retry_times > 0:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    retry_times -= 1
+                    log.warning('[{0}] retry_times: {1}'.format(func.__name__, retry_times))
+
+            log.critical("ALL {0} attempts failed".format(max_times))
+        return retry_fuc
+
+    return decorate
+
+@retry()
+def test():
+    tmp = random.randint(0,10)
+    if tmp > 2:
+        print '%s is error' % tmp
+        raise IOError('test error')
+    else:
+        print '%s is ok' % tmp
+        return tmp
+
+if __name__ == '__main__':
+    test()
 ```
 
 ### 单元测试
