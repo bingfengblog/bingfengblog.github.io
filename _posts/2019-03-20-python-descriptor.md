@@ -300,7 +300,7 @@ class ClassMethod(object):
 
 <br />
 
-引用自: [(https://pyzh.readthedocs.io/en/latest/Descriptor-HOW-TO-Guide.html)]
+[原文链接]: (https://pyzh.readthedocs.io/en/latest/Descriptor-HOW-TO-Guide.html)
 
 
 
