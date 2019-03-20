@@ -17,7 +17,7 @@ tags: python
 
 默认对属性的访问控制是从对象的字典里面(__dict__)中获取(get), 设置(set)和删除(delete)它。举例来说， a.x 的查找顺序是, `a.__dict__['x']` , 然后 `type(a).__dict__['x']` , 然后找 type(a) 的父类(不包括元类(metaclass)).如果查找到的值是一个描述器, Python就会调用描述器的方法来重写默认的控制行为。这个重写发生在这个查找环节的哪里取决于定义了哪个描述器方法。注意, 只有在新式类中时描述器才会起作用。(新式类是继承自 type 或者 object 的类)
 
-描述器是强大的，应用广泛的。描述器正是属性, 实例方法, 静态方法, 类方法和 super 的背后的实现机制。描述器在Python自身中广泛使用，以实现Python 2.2中引入的新式类。描述器简化了底层的C代码，并为Python的日常编程提供了一套灵活的新工具。
+描述器是强大的，应用广泛的。描述器正是**属性**, **实例方法**, **静态方法**, **类方法**和 **super** 的背后的实现机制。描述器在Python自身中广泛使用，以实现Python 2.2中引入的新式类。描述器简化了底层的C代码，并为Python的日常编程提供了一套灵活的新工具。
 
 ### 1.3. 描述器协议
 
@@ -216,7 +216,7 @@ class Function(object):
 
 ```
 
-从输出来看，绑定方法和非绑定方法是两个不同的类型。它们是在文件 Objects/classobject.c [http://svn.python.org/view/python/trunk/Objects/classobject.c?view=markup](http://svn.python.org/view/python/trunk/Objects/classobject.c?view=markup) 中用C实现的， PyMethod_Type 是一个对象，但是根据 im_self 是否是 NULL (在C中等价于 None ) 而表现不同。
+从输出来看，绑定方法和非绑定方法是两个不同的类型。它们是在文件 Objects/classobject.c [链接地址](http://svn.python.org/view/python/trunk/Objects/classobject.c?view=markup) 中用C实现的， PyMethod_Type 是一个对象，但是根据 im_self 是否是 NULL (在C中等价于 None ) 而表现不同。
 
 同样，一个方法的表现依赖于 im_self 。如果设置了(意味着bound), 原来的函数(保存在 im_func 中)被调用，并且第一个参数设置成实例。如果unbound, 所有参数原封不动地传给原来的函数。函数 instancemethod_call() 的实际C语言实现只是比这个稍微复杂些(有一些类型检查)。
 
