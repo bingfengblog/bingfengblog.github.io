@@ -251,6 +251,7 @@ classmethod	  | f(type(obj), *args)   | f(klass, *args)
 3
 >>> print E().f(3)
 3
+
 利用非资料描述器， staticmethod() 的纯Python版本看起来像这样:
 
 class StaticMethod(object):
@@ -261,6 +262,7 @@ class StaticMethod(object):
 
  def __get__(self, obj, objtype=None):
       return self.f
+
 不像静态方法，类方法需要在调用函数之前会在参数列表前添上class的引用作为第一个参数。不管调用者是对象还是类，这个格式是一样的:
 
 >>> class E(object):
@@ -272,6 +274,7 @@ class StaticMethod(object):
 ('E', 3)
 >>> print E().f(3)
 ('E', 3)
+
 当一个函数不需要相关的数据做参数而只需要一个类的引用的时候，这个特征就显得很有用了。类方法的一个用途是用来创建不同的类构造器。在Python 2.3中, dict.fromkeys() 可以依据一个key列表来创建一个新的字典。等价的Python实现就是:
 
 class Dict:
@@ -283,10 +286,12 @@ class Dict:
             d[key] = value
         return d
     fromkeys = classmethod(fromkeys)
+
 现在，一个新的字典就可以这么创建:
 
 >>> Dict.fromkeys('abracadabra')
 {'a': None, 'r': None, 'b': None, 'c': None, 'd': None}
+
 用非资料描述器协议， classmethod() 的纯Python版本实现看起来像这样:
 
 class ClassMethod(object):
