@@ -74,11 +74,11 @@ super() 返回的对象同样有一个定制的 `__getattribute__()` 方法用�
 
 注意:在Python 2.2中，如果 m 是一个描述器, super(B, obj).m() 只会调用方法 __get__() 。在Python 2.3中，非资料描述器(除非是个旧式类)也会被调用。 super_getattro() 的实现细节在： Objects/typeobject.c ，[del] 一个等价的Python实现在 Guido’s Tutorial [/del] (译者注：原文此句已删除，保留供大家参考)。
 
-以上展示了描述器的机理是在 object, type, 和 super 的 __getattribute__() 方法中实现的。由 object 派生出的类自动的继承这个机理，或者它们有个有类似机理的元类。同样，可以重写类的 __getattribute__() 方法来关闭这个类的描述器行为。
+以上展示了描述器的机理是在 object, type, 和 super 的 `__getattribute__()` 方法中实现的。由 object 派生出的类自动的继承这个机理，或者它们有个有类似机理的元类。同样，可以重写类的 `__getattribute__()` 方法来关闭这个类的描述器行为。
 
 ### 1.5. 描述器例子
 
-下面的代码中定义了一个资料描述器，每次 get 和 set 都会打印一条消息。重写 __getattribute__() 是另一个可以使所有属性拥有这个行为的方法。但是，描述器在监视特定属性的时候是很有用的。
+下面的代码中定义了一个资料描述器，每次 get 和 set 都会打印一条消息。重写 `__getattribute__()` 是另一个可以使所有属性拥有这个行为的方法。但是，描述器在监视特定属性的时候是很有用的。
 
 ```
 class RevealAccess(object):
@@ -121,6 +121,7 @@ Retrieving var "x"
 调用 property() 是建立资料描述器的一种简洁方式，从而可以在访问属性时触发相应的方法调用。这个函数的原型:
 
 property(fget=None, fset=None, fdel=None, doc=None) -> property attribute
+
 下面展示了一个典型应用：定义一个托管属性(Managed Attribute) x 。
 
 ```
@@ -190,7 +191,7 @@ Python的面向对象特征是建立在基于函数的环境之上的。非资�
 
 类的字典把方法当做函数存储。在定义类的时候，方法通常用关键字 def 和 lambda 来声明。这和创建函数是一样的。唯一的不同之处是类方法的第一个参数用来表示对象实例。Python约定，这个参数通常是 self, 但也可以叫 this 或者其它任何名字。
 
-为了支持方法调用，函数包含一个 __get__() 方法以便在属性访问时绑定方法。这就是说所有的函数都是非资料描述器，它们返回绑定(bound)还是非绑定(unbound)的方法取决于他们是被实例调用还是被类调用。用Python代码来描述就是:
+为了支持方法调用，函数包含一个 `__get__()` 方法以便在属性访问时绑定方法。这就是说所有的函数都是非资料描述器，它们返回绑定(bound)还是非绑定(unbound)的方法取决于他们是被实例调用还是被类调用。用Python代码来描述就是:
 
 ```
 class Function(object):
@@ -215,7 +216,7 @@ class Function(object):
 
 ```
 
-从输出来看，绑定方法和非绑定方法是两个不同的类型。它们是在文件 Objects/classobject.c(http://svn.python.org/view/python/trunk/Objects/classobject.c?view=markup) 中用C实现的， PyMethod_Type 是一个对象，但是根据 im_self 是否是 NULL (在C中等价于 None ) 而表现不同。
+从输出来看，绑定方法和非绑定方法是两个不同的类型。它们是在文件 Objects/classobject.c [http://svn.python.org/view/python/trunk/Objects/classobject.c?view=markup](http://svn.python.org/view/python/trunk/Objects/classobject.c?view=markup) 中用C实现的， PyMethod_Type 是一个对象，但是根据 im_self 是否是 NULL (在C中等价于 None ) 而表现不同。
 
 同样，一个方法的表现依赖于 im_self 。如果设置了(意味着bound), 原来的函数(保存在 im_func 中)被调用，并且第一个参数设置成实例。如果unbound, 所有参数原封不动地传给原来的函数。函数 instancemethod_call() 的实际C语言实现只是比这个稍微复杂些(有一些类型检查)。
 
