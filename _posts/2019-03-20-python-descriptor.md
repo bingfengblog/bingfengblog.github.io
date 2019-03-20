@@ -7,45 +7,48 @@ tags: python
 
 ### 1.1. 摘要
 
-定义描述器, 总结描述器协议，并展示描述器是怎么被调用的。展示一个自定义的描述器和包括函数，属性(property), 静态方法(static method), 类方法在内的几个Python内置描述器。通过给出一个纯Python的实现和示例应用来展示每个描述器是怎么工作的。
+定义描述器, 总结描述器协议，并展示描述器是怎么被调用的。展示一个自定义的描述器和包括函数，属性`property`, 静态方法`static method`, 类方法在内的几个Python内置描述器。通过给出一个纯Python的实现和示例应用来展示每个描述器是怎么工作的。
 
 学习描述器不仅让你接触到更多的工具，还可以让你更深入地了解Python，让你体会到Python设计的优雅之处。
 
 ### 1.2. 定义和介绍
 
-一般来说，一个描述器是一个有“绑定行为”的对象属性(object attribute)，它的访问控制被描述器协议方法重写。这些方法是 __get__(), __set__(), 和 __delete__() 。有这些方法的对象叫做描述器。
+一般来说，一个描述器是一个有“绑定行为”的对象属性(object attribute)，它的访问控制被描述器协议方法重写。这些方法是 `__get__()`, `__set__()`, 和 `__delete__()` 。有这些方法的对象叫做描述器。
 
-默认对属性的访问控制是从对象的字典里面(__dict__)中获取(get), 设置(set)和删除(delete)它。举例来说， a.x 的查找顺序是, a.__dict__['x'] , 然后 type(a).__dict__['x'] , 然后找 type(a) 的父类(不包括元类(metaclass)).如果查找到的值是一个描述器, Python就会调用描述器的方法来重写默认的控制行为。这个重写发生在这个查找环节的哪里取决于定义了哪个描述器方法。注意, 只有在新式类中时描述器才会起作用。(新式类是继承自 type 或者 object 的类)
+默认对属性的访问控制是从对象的字典里面(__dict__)中获取(get), 设置(set)和删除(delete)它。举例来说， a.x 的查找顺序是, `a.__dict__['x']` , 然后 `type(a).__dict__['x']` , 然后找 type(a) 的父类(不包括元类(metaclass)).如果查找到的值是一个描述器, Python就会调用描述器的方法来重写默认的控制行为。这个重写发生在这个查找环节的哪里取决于定义了哪个描述器方法。注意, 只有在新式类中时描述器才会起作用。(新式类是继承自 type 或者 object 的类)
 
 描述器是强大的，应用广泛的。描述器正是属性, 实例方法, 静态方法, 类方法和 super 的背后的实现机制。描述器在Python自身中广泛使用，以实现Python 2.2中引入的新式类。描述器简化了底层的C代码，并为Python的日常编程提供了一套灵活的新工具。
 
 ### 1.3. 描述器协议
 
+```
 descr.__get__(self, obj, type=None) --> value
 
 descr.__set__(self, obj, value) --> None
 
 descr.__delete__(self, obj) --> None
 
+```
+
 这是所有描述器方法。一个对象具有其中任一个方法就会成为描述器，从而在被当作对象属性时重写默认的查找行为。
 
-如果一个对象同时定义了 __get__() 和 __set__(),它叫做资料描述器(data descriptor)。仅定义了 __get__() 的描述器叫非资料描述器(常用于方法，当然其他用途也是可以的)
+如果一个对象同时定义了 `__get__()` 和 `__set__()`,它叫做资料描述器(data descriptor)。仅定义了 `__get__()` 的描述器叫非资料描述器(常用于方法，当然其他用途也是可以的)
 
 资料描述器和非资料描述器的区别在于：相对于实例的字典的优先级。如果实例字典中有与描述器同名的属性，如果描述器是资料描述器，优先使用资料描述器，如果是非资料描述器，优先使用字典中的属性。(译者注：这就是为何实例 a 的方法和属性重名时，比如都叫 foo Python会在访问 a.foo 的时候优先访问实例字典中的属性，因为实例函数的实现是个非资料描述器)
 
-要想制作一个只读的资料描述器，需要同时定义 __set__ 和 __get__,并在 __set__ 中引发一个 AttributeError 异常。定义一个引发异常的 __set__ 方法就足够让一个描述器成为资料描述器。
+要想制作一个只读的资料描述器，需要同时定义 `__set__` 和 `__get__`,并在 `__set__` 中引发一个 AttributeError 异常。定义一个引发异常的 `__set__` 方法就足够让一个描述器成为资料描述器。
 
 ### 1.4. 描述器的调用
 
-描述器可以直接这么调用： d.__get__(obj)
+描述器可以直接这么调用： `d.__get__(obj)`
 
-然而更常见的情况是描述器在属性访问时被自动调用。举例来说， obj.d 会在 obj 的字典中找 d ,如果 d 定义了 __get__ 方法，那么 d.__get__(obj) 会依据下面的优先规则被调用。
+然而更常见的情况是描述器在属性访问时被自动调用。举例来说， obj.d 会在 obj 的字典中找 d ,如果 d 定义了 `__get__` 方法，那么 `d.__get__(obj)` 会依据下面的优先规则被调用。
 
 调用的细节取决于 obj 是一个类还是一个实例。另外，描述器只对于新式对象和新式类才起作用。继承于 object 的类叫做新式类。
 
-对于对象来讲，方法 object.__getattribute__() 把 b.x 变成 type(b).__dict__['x'].__get__(b, type(b)) 。具体实现是依据这样的优先顺序：资料描述器优先于实例变量，实例变量优先于非资料描述器，__getattr__()方法(如果对象中包含的话)具有最低的优先级。完整的C语言实现可以在 Objects/object.c 中 PyObject_GenericGetAttr() 查看。
+对于对象来讲，方法 `object.__getattribute__()` 把 b.x 变成 `type(b).__dict__['x'].__get__(b, type(b))` 。具体实现是依据这样的优先顺序：资料描述器优先于实例变量，实例变量优先于非资料描述器，`__getattr__()` 方法(如果对象中包含的话)具有最低的优先级。完整的C语言实现可以在 Objects/object.c 中 PyObject_GenericGetAttr() 查看。
 
-对于类来讲，方法 type.__getattribute__() 把 B.x 变成 B.__dict__['x'].__get__(None, B) 。用Python来描述就是:
+对于类来讲，方法 `type.__getattribute__()` 把 B.x 变成 `B.__dict__['x'].__get__(None, B)` 。用Python来描述就是:
 
 ```
 
@@ -60,13 +63,14 @@ def __getattribute__(self, key):
 
 其中重要的几点：
 
-描述器的调用是因为 __getattribute__()
-重写 __getattribute__() 方法会阻止正常的描述器调用
-__getattribute__() 只对新式类的实例可用
+描述器的调用是因为 `__getattribute__()`
+重写 `__getattribute__()` 方法会阻止正常的描述器调用
+`__getattribute__()` 只对新式类的实例可用
 object.__getattribute__() 和 type.__getattribute__() 对 __get__() 的调用不一样
 资料描述器总是比实例字典优先。
 非资料描述器可能被实例字典重写。(非资料描述器不如实例字典优先)
-super() 返回的对象同样有一个定制的 __getattribute__() 方法用来调用描述器。调用 super(B, obj).m() 时会先在 obj.__class__.__mro__ 中查找与B紧邻的基类A，然后返回 A.__dict__['m'].__get__(obj, A) 。如果不是描述器，原样返回 m 。如果实例字典中找不到 m ，会回溯继续调用 object.__getattribute__() 查找。(译者注：即在 __mro__ 中的下一个基类中查找)
+
+super() 返回的对象同样有一个定制的 `__getattribute__()` 方法用来调用描述器。调用 super(B, obj).m() 时会先在 obj.__class__.__mro__ 中查找与B紧邻的基类A，然后返回 A.__dict__['m'].__get__(obj, A) 。如果不是描述器，原样返回 m 。如果实例字典中找不到 m ，会回溯继续调用 object.__getattribute__() 查找。(译者注：即在 __mro__ 中的下一个基类中查找)
 
 注意:在Python 2.2中，如果 m 是一个描述器, super(B, obj).m() 只会调用方法 __get__() 。在Python 2.3中，非资料描述器(除非是个旧式类)也会被调用。 super_getattro() 的实现细节在： Objects/typeobject.c ，[del] 一个等价的Python实现在 Guido’s Tutorial [/del] (译者注：原文此句已删除，保留供大家参考)。
 
@@ -219,14 +223,16 @@ class Function(object):
 
 非资料描述器为将函数绑定成方法这种常见模式提供了一个简单的实现机制。
 
-简而言之，函数有个方法 __get__() ，当函数被当作属性访问时，它就会把函数变成一个实例方法。非资料描述器把 obj.f(*args) 的调用转换成 f(obj, *args) 。 调用 klass.f(*args) 就变成调用 f(*args) 。
+简而言之，函数有个方法 `__get__()` ，当函数被当作属性访问时，它就会把函数变成一个实例方法。非资料描述器把 `obj.f(*args)` 的调用转换成 `f(obj, *args)` 。 调用 `klass.f(*args)` 就变成调用 `f(*args)` 。
 
 下面的表格总结了绑定和它最有用的两个变种:
 
-Transformation	Called from an Object	Called from a Class
-function	f(obj, *args)	f(*args)
-staticmethod	f(*args)	f(*args)
-classmethod	f(type(obj), *args)	f(klass, *args)
+Transformation|	Called from an Object | Called from a Class
+------------- | --------------------- | -------------------
+function	  | f(obj, *args)         | f(*args)
+staticmethod  |	f(*args)              | f(*args)
+classmethod	  | f(type(obj), *args)   | f(klass, *args)
+
 静态方法原样返回函数，调用 c.f 或者 C.f 分别等价于 object.__getattribute__(c, "f") 或者 object.__getattribute__(C, "f") 。也就是说，无论是从一个对象还是一个类中，这个函数都会同样地访问到。
 
 那些不需要 self 变量的方法适合用做静态方法。
