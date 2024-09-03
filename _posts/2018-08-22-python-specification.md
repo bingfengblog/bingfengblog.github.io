@@ -682,25 +682,25 @@ tags: python
 
 ### 3.8 import格式
 
-   ·[强制] [PY037] 每行只能导入一个库
-   ·[强制] 必须按如下顺序排列import，每部分之间留一个空行 
-   
-   标准库
-   第三方库
-   应用程序自有库
-   #GOOD:
-   
-   import os
-   import sys
-   
-   from third.party import lib
-   from third.party import foobar as fb
-   
-   import my.own.module
-   #BAD: 
-   
-   import os, sys
-   from third.party import lib, foobar
+    ·[强制] [PY037] 每行只能导入一个库
+    ·[强制] 必须按如下顺序排列import，每部分之间留一个空行 
+    
+    标准库
+    第三方库
+    应用程序自有库
+    #GOOD:
+    
+    import os
+    import sys
+    
+    from third.party import lib
+    from third.party import foobar as fb
+    
+    import my.own.module
+    #BAD: 
+    
+    import os, sys
+    from third.party import lib, foobar
 
 ### 3.9 命名规则
 
